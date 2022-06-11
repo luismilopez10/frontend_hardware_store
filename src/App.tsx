@@ -1,6 +1,7 @@
 import { useState } from 'react'
-import logo from './logo.svg'
 import './App.css'
+import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+
 
 function App() {
   const [count, setCount] = useState(0)
@@ -8,36 +9,25 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          <button type="button" onClick={() => setCount((count) => count + 1)}>
-            count is: {count}
-          </button>
-        </p>
-        <p>
-          Edit <code>App.tsx</code> and save to test HMR updates.
-        </p>
-        <p>
-          <a
-            className="App-link"
-            href="https://reactjs.org"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Learn React
-          </a>
-          {' | '}
-          <a
-            className="App-link"
-            href="https://vitejs.dev/guide/features.html"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Vite Docs
-          </a>
-        </p>
+        <a href="#" className='button'>Learn more</a>
       </header>
+
+      <BrowserRouter>
+      <nav className='flex sm:justify-left space-x-4 p-5 bg-orange-600'>
+          <Link to="/provider" className='rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900'>Providers</Link>
+          <Link to="/inventory" className='rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900'>Inventory</Link>
+          <Link to="/receipt" className='rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900'>Receipts</Link>
+          <Link to="/bills" className='rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900'>Bills</Link>
+      </nav>
+      <Routes>
+            {/* <Route path="/" element={<Home />}/>
+            <Route path="/provider" element={<Providers />}/>
+            <Route path="/inventory" element={<Inventory />}/>
+            <Route path="/receipt" element={<Receipts />}/>
+            <Route path="/bills" element={<Bills />}/> */}
+      </Routes>
+    </BrowserRouter>
+
     </div>
   )
 }
