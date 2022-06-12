@@ -1,0 +1,55 @@
+.nav__container {
+    padding: 15px;
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 15px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
+}
+
+.nav{
+    display: flex;
+    align-items: center;
+    justify-content: 
+    space-between;
+}
+
+.nav__logo {
+    position: relative;
+    width: 30px;
+    height: 30px;
+    background: url('./assets/computer-pc-svgrepo-com.svg')
+    center no-repeat;
+    background-size: cover;
+    border-radius: 1px;
+    z-index: 1;
+    overflow: hidden;
+}
+
+.nav__list {
+    list-style: none;
+    display: flex;
+    column-gap: 20px;
+}
+
+.nav__link {
+    display: inline-block;
+    text-decoration: none;
+    color: #000;
+    position: relative;
+}
+
+.nav__link::after {
+    content: '';
+    position: absolute;
+    left: 0;bottom: 0;
+    width: 100%;height: 2px;
+    background-color: #000;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform .5s;
+}
+
+.nav__link:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
+}

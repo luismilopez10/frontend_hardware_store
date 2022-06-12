@@ -1,33 +1,50 @@
 import { useState } from 'react'
 import './App.css'
+import './Nav.css'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
+import Login from './pages/Login'
+import POS from './pages/POS'
+import Inventory from './pages/Inventory'
+import FormAddNewProduct from './pages/FormAddNewProduct'
 
 
 function App() {
-  const [count, setCount] = useState(0)
+
+  const logged=true;
 
   return (
-    <div className="App">
-      <header className="App-header">
-        <a href="#" className='button'>Learn more</a>
-      </header>
-
+    <div>
       <BrowserRouter>
-      <nav className='flex sm:justify-left space-x-4 p-5 bg-orange-600'>
-          <Link to="/provider" className='rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900'>Providers</Link>
-          <Link to="/inventory" className='rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900'>Inventory</Link>
-          <Link to="/receipt" className='rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900'>Receipts</Link>
-          <Link to="/bills" className='rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900'>Bills</Link>
-      </nav>
-      <Routes>
-            {/* <Route path="/" element={<Home />}/>
-            <Route path="/provider" element={<Providers />}/>
-            <Route path="/inventory" element={<Inventory />}/>
-            <Route path="/receipt" element={<Receipts />}/>
-            <Route path="/bills" element={<Bills />}/> */}
-      </Routes>
-    </BrowserRouter>
-
+        {logged ?
+          <nav className="nav nav__container">
+              <span className="nav__logo"></span>
+              <ul className="nav__list">
+                  <li className="nav__item">
+                      <Link to='/' className="nav__link">POS</Link>
+                  </li>
+                  <li className="nav__item">
+                      <Link to='/providers' className="nav__link">Providers</Link>
+                  </li>
+                  <li className="nav__item">
+                      <Link to='/inventory' className="nav__link">Inventory</Link>
+                  </li>
+                  <li className="nav__item">
+                      <Link to='/login' className="nav__link">Logout</Link>
+                  </li>
+              </ul>
+          </nav>
+        : 
+          <nav className="nav nav__container">
+              <span className="nav__logo"></span>
+          </nav>
+        }
+        <Routes>
+          <Route path="/login" element={<Login />}/>
+          <Route path="/pos" element={<POS />}/>
+          <Route path="/inventory" element={<Inventory />}/>
+          <Route path="/formaddnewproduct" element={<FormAddNewProduct />}/>
+        </Routes>
+      </BrowserRouter>
     </div>
   )
 }
