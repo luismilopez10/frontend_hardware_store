@@ -3,7 +3,7 @@ import { inventoryProductType } from '../../features/InventoryProductSlice'
 
 const updateProductUrl = 'https://raulhwstore.herokuapp.com/api/v1/products/'
 
-export const updateProduct = createAsyncThunk('updateProduct', async (product: InventoryProductType) => {
+export const updateProduct = createAsyncThunk('updateProduct', async (product: inventoryProductType) => {
     const response = await fetch(updateProductUrl, {
         method: 'PUT',
         headers: {

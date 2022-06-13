@@ -3,13 +3,14 @@ import './App.css'
 import './Nav.css'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
-import POS from './pages/product/POS'
+import POS from './pages/bill/POS'
 import Inventory from './pages/product/Inventory'
 import FormAddNewProduct from './pages/product/FormAddNewProduct'
 import ProviderList from './components/provider/ProviderList'
 import Provider from './pages/provider/Provider'
 import FormAddNewProvider from './pages/provider/FormAddNewProvider'
 import FormEditProduct from './pages/product/FormEditProduct'
+import ShoppingCart from './pages/bill/ShoppingCart'
 
 
 function App() {
@@ -27,7 +28,7 @@ function App() {
 
               <ul className="nav__list">
                   <li className="nav__item">
-                      <Link to='/' className="nav__link">POS</Link>
+                      <Link to='/pos' className="nav__link">POS</Link>
                   </li>
                   <li className="nav__item">
                       <Link to='/providers' className="nav__link">Providers</Link>
@@ -55,6 +56,7 @@ function App() {
           <Route path="/formaddnewproduct" element={<FormAddNewProduct />}/>
           <Route path="/formeditproduct" element={<FormEditProduct />}/>
           <Route path="/formaddnewprovider" element={<FormAddNewProvider />}/>
+          <Route path="/shoppingcart" element={<ShoppingCart />}/>
         </Routes>
       </BrowserRouter>
     </div>

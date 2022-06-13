@@ -3,14 +3,18 @@ import { useSelector } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
 import { RootState } from '../../app/store'
 import InventoryProductCard from '../../components/product/InventoryProductCard'
-import './Inventory.css'
+import './POS.css'
 import { posibleStatus } from '../../features/posibleStatus';
 import { getAllProducts } from '../../actions/product/getAllProducts';
 import { useAppDispatch } from '../../app/store'
 import { inventoryProductType, selectInventoryProductsFetchError, selectInventoryProductsState, selectInventoryProductsStatus } from '../../features/InventoryProductSlice'
 import Loader from '../../components/Loader'
+import POSProductCard from '../../components/product/POSProductCard'
+import { AiOutlineShoppingCart } from 'react-icons/ai'
 
-const Inventory = () => {
+type Props = {}
+
+const POS = (props: Props) => {
 
   const error = useSelector(selectInventoryProductsFetchError())
   const status = useSelector(selectInventoryProductsStatus())
@@ -26,15 +30,15 @@ const Inventory = () => {
   }, [dispatch])
 
   const onAdd = () => {
-    navigate("/formaddnewproduct")
+    navigate("/shoppingcart")
   }
 
   return (
     <div>
       
       <div className='spaced__header'>
-        <h1>Inventory</h1>
-        <input className='btn btn-primary' type="submit" value="Add new product" onClick={() => onAdd()} />
+        <h1>Point of sale</h1>        
+        <AiOutlineShoppingCart className='cart__icon' onClick={() => onAdd()} />
       </div>
       <hr />
 
@@ -47,15 +51,12 @@ const Inventory = () => {
               {getInventoryProducts.map((product: inventoryProductType) => {
                 return (
                   <div key={product.id} className=''>
-                    <InventoryProductCard 
+                    <POSProductCard 
                       id={product.id} 
                       name={product.name} 
                       description={product.description} 
                       stock={product.stock} 
                       price={product.price} 
-                      providerId={product.providerId} 
-                      minimumAmount={product.minimumAmount} 
-                      maximumAmount={product.maximumAmount} 
                     />
                   </div>)
               })}
@@ -68,5 +69,4 @@ const Inventory = () => {
   )
 }
 
-export default Inventory
-
+export default POS

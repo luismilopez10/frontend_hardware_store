@@ -14,10 +14,10 @@ const FormAddNewProduct: React.FunctionComponent = () => {
 
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState();
+    const [price, setPrice] = useState(0);
     const [providerId, setProviderId] = useState("");
-    const [minimum, setMinimum] = useState();
-    const [maximum, setMaximum] = useState();
+    const [minimum, setMinimum] = useState(0);
+    const [maximum, setMaximum] = useState(0);
 
     const dispatch = useAppDispatch()
     const navigate = useNavigate()

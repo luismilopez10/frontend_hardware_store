@@ -13,11 +13,12 @@ const InventoryProductCard = (props: inventoryProductType) => {
   
   const onEdit = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     e.preventDefault();
-    
+
     dispatch(editProduct({
       id: props.id,
       name: props.name,
       description: props.description,
+      stock: props.stock,
       price: props.price,
       providerId: props.providerId,
       minimumAmount: props.minimumAmount,
@@ -35,13 +36,14 @@ const InventoryProductCard = (props: inventoryProductType) => {
 
   return (
     <div className='product'>
-      <h3 className='product__title'>{props.name}</h3>
+      {/* <img src="https://definicion.de/wp-content/uploads/2014/12/tornillo.jpg" alt="" /> */}
+      <h3 className='product__title'><b>{props.name}</b></h3>
       <p className='product__description'>{props.description}</p>
-      <p className='product__description'>In stock: {props.stock}</p>
-      <p className='product__description'>Price: ${props.price}</p>
-      <p className='product__description'>Provider Id: {props.providerId}</p>
-      <p className='product__description'>Minimum: {props.minimumAmount}</p>
-      <p className='product__description'>Maximum: {props.maximumAmount}</p>
+      <p className='product__description'><b>Stock:</b> {props.stock}</p>
+      <p className='product__description'><b>Price: $</b> {props.price}</p>
+      <p className='product__description'><b>Provider:</b> {props.providerId}</p>
+      <p className='product__description'><b>Minimum:</b> {props.minimumAmount}</p>
+      <p className='product__description'><b>Maximum:</b> {props.maximumAmount}</p>
       <input type="submit" className='product__button' value="Edit" onClick={(e) => onEdit(e)} />
       <input type="submit" className='product__button' value="Delete" onClick={(e) => onDelete(e)} />
     </div>

@@ -21,14 +21,24 @@ type editInventoryProductType = {
     id: string,
     name: string,
     description: string,
+    stock: number,
     price: number,
     providerId: string,
     minimumAmount: number,
     maximumAmount: number,
 }
 
+type cartProductType = {
+    id: string,
+    name: string,
+    description: string,
+    stock: number,
+    price: number,
+}
+
 interface initialStateInventoryProductType {
     products: inventoryProductType[],
+    cartProducts: cartProductType[],
     editProduct: editInventoryProductType,
     status: posibleStatus,
     error: string | null
@@ -36,10 +46,12 @@ interface initialStateInventoryProductType {
 
 const initialState: initialStateInventoryProductType = {
     products: [],
+    cartProducts: [],
     editProduct: {
         id: "",
         name: "",
         description: "",
+        stock: 0,
         price: 0,
         providerId: "",
         minimumAmount: 0,
@@ -56,10 +68,19 @@ const inventoryProductSlice = createSlice({
             state.editProduct.id = action.payload.id
             state.editProduct.name = action.payload.name
             state.editProduct.description = action.payload.description
+            state.editProduct.stock = action.payload.stock
             state.editProduct.price = action.payload.price
             state.editProduct.providerId = action.payload.providerId
             state.editProduct.minimumAmount = action.payload.minimumAmount
             state.editProduct.maximumAmount = action.payload.maximumAmount
+        },
+
+        cartProduct: (state: initialStateInventoryProductType, action: PayloadAction<cartProductType>) => {
+            state.editProduct.id = action.payload.id
+            state.editProduct.name = action.payload.name
+            state.editProduct.description = action.payload.description
+            state.editProduct.stock = action.payload.stock
+            state.editProduct.price = action.payload.price
         }
     },
     extraReducers: (builder) => {
@@ -121,6 +142,8 @@ const inventoryProductSlice = createSlice({
 
 
 export type { inventoryProductType }
+export type { editInventoryProductType }
+export type { cartProductType }
 export type { initialStateInventoryProductType }
 export default inventoryProductSlice.reducer
 
@@ -128,3 +151,4 @@ export const selectInventoryProductsState = () => (state: RootState) => state.in
 export const selectInventoryProductsStatus = () => (state: RootState) => state.inventoryProduct.status
 export const selectInventoryProductsFetchError = () => (state: RootState) => state.inventoryProduct.error
 export const {editProduct} = inventoryProductSlice.actions;
+export const {cartProduct} = inventoryProductSlice.actions;

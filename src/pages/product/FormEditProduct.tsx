@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { postProduct } from '../../actions/product/postProduct';
-import { editProduct, inventoryProductType, selectInventoryProductsState } from '../../features/InventoryProductSlice';
+import { editInventoryProductType, editProduct, inventoryProductType, selectInventoryProductsState } from '../../features/InventoryProductSlice';
 import './FormAddNewProduct.css'
 import { RootState, useAppDispatch } from '../../app/store'
 import { useSelector } from 'react-redux';
@@ -15,10 +15,11 @@ const FormEditProduct: React.FunctionComponent = () => {
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
-    const [price, setPrice] = useState();
+    const [stock, setStock] = useState(0);
+    const [price, setPrice] = useState(0);
     const [providerId, setProviderId] = useState("");
-    const [minimum, setMinimum] = useState();
-    const [maximum, setMaximum] = useState();
+    const [minimum, setMinimum] = useState(0);
+    const [maximum, setMaximum] = useState(0);
 
     const dispatch = useAppDispatch();
     const navigate = useNavigate();
@@ -34,6 +35,7 @@ const FormEditProduct: React.FunctionComponent = () => {
       setId(getEditInventoryProduct.id);
       setName(getEditInventoryProduct.name);
       setDescription(getEditInventoryProduct.description);
+      setStock(getEditInventoryProduct.stock);
       setPrice(getEditInventoryProduct.price);
       setProviderId(getEditInventoryProduct.providerId);
       setMinimum(getEditInventoryProduct.minimumAmount);
@@ -44,8 +46,8 @@ const FormEditProduct: React.FunctionComponent = () => {
         e.preventDefault();
 
         if (name && description && price && providerId && minimum && maximum && minimum < maximum) {
-            const editedInventoryProduct: inventoryProductType = {
-                id: id, name: name, description: description, stock: 0, price: price, providerId: providerId, minimumAmount: minimum, maximumAmount: maximum
+            const editedInventoryProduct: editInventoryProductType = {
+                id: id, name: name, description: description, stock: stock, price: price, providerId: providerId, minimumAmount: minimum, maximumAmount: maximum
             }
 
             dispatch(updateProduct(editedInventoryProduct));

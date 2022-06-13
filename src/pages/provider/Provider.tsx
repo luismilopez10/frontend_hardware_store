@@ -27,6 +27,7 @@ const Provider = () => {
           <input className='btn btn-primary' type="submit" value="Add new provider" onClick={() => onAdd()} />
         </div>
       </div>
+      <hr />
 
       <div className='container'>
         {
