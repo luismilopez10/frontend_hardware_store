@@ -3,7 +3,7 @@ import './App.css'
 import './Nav.css'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
-import POS from './pages/bill/POS'
+import POS from './pages/product/POS'
 import Inventory from './pages/product/Inventory'
 import FormAddNewProduct from './pages/product/FormAddNewProduct'
 import ProviderList from './components/provider/ProviderList'
@@ -26,6 +26,8 @@ function App() {
   const logout = () => {
     dispatch(logOutInReducer());
   }
+
+  const logged = true;
 
   return (
     <div>
