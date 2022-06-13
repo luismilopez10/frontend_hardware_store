@@ -63,23 +63,23 @@ const FormAddNewProduct: React.FunctionComponent = () => {
                         <div className="underline"></div>
                     </div>
                     <div className="input-box underline">
-                        <input type="number" min="0" placeholder="Product Price" required value={price} onChange={(e) => setPrice(parseInt(e.target.value))} />
+                        <input type="number" min="0" placeholder="Product Price" required value={price==0?"":price} onChange={(e) => setPrice(parseInt(e.target.value))} />
                         <div className="underline"></div>
                     </div>
                     <div className="input-box">
-                        <select className='form-select' onChange={(e) => setProviderId(e.target.value)}>
-                            <option value="N/A" selected disabled>Select provider</option>
+                        <select defaultValue={'N/A'} className='form-select' onChange={(e) => setProviderId(e.target.value)}>
+                            <option value="N/A" disabled>Select provider</option>
                             {getProviders.map(provider => {
                                 return <option value={provider.id}>{provider.name}</option>
                             })}
                         </select>
                     </div>
                     <div className="input-box underline">
-                        <input type="number" min="0" placeholder="Product Minimum" required value={minimum} onChange={(e) => setMinimum(parseInt(e.target.value))} />
+                        <input type="number" min="0" placeholder="Product Minimum" required value={minimum==0?"":minimum} onChange={(e) => setMinimum(parseInt(e.target.value))} />
                         <div className="underline"></div>
                     </div>
                     <div className="input-box underline">
-                        <input type="number" min="0" placeholder="Product Maximum" required value={maximum} onChange={(e) => setMaximum(parseInt(e.target.value))} />
+                        <input type="number" min="0" placeholder="Product Maximum" required value={maximum==0?"":maximum} onChange={(e) => setMaximum(parseInt(e.target.value))} />
                         <div className="underline"></div>
                     </div>
                     <div className="input-box button">

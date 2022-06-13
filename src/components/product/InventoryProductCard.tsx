@@ -36,7 +36,6 @@ const InventoryProductCard = (props: inventoryProductType) => {
 
   return (
     <div className='product'>
-      {/* <img src="https://definicion.de/wp-content/uploads/2014/12/tornillo.jpg" alt="" /> */}
       <h3 className='product__title'><b>{props.name}</b></h3>
       <p className='product__description'>{props.description}</p>
       <p className='product__description'><b>Stock:</b> {props.stock}</p>

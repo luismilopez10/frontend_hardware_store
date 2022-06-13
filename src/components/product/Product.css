@@ -1,7 +1,7 @@
 .product {
     position: relative;
     flex: 1 150px;
-    width: 260px;
+    width: 230px;
     height: 270px;
     background-size: cover;
     border-radius: 20px;
@@ -11,6 +11,7 @@
     text-align: center;
     margin: 0 10px 30px 10px;
     padding: 15px;
+    background-color: #fff;
   }
 
   
@@ -24,7 +25,7 @@
   
 .product__title {
     font-size: 19px;
-    padding: 10px;
+    padding: 12px;
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -32,7 +33,7 @@
 
 .product__description {
     font-size: 14px;
-    padding: 0 10px; 
+    padding: 0 14px; 
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
@@ -40,14 +41,15 @@
 }
 
 .product__button {
+  font-size: 14px;
   color: #fff;
   border: none;
   text-align: center;
-  padding: 10px 20px;
+  padding: 6px 17px;
   margin-top: 15px;
   border-radius: 25px;
   background: linear-gradient( to right,  #4590fb 0%, #6aa5f8 100%);
-  margin: 15px 5px 50px 5px;
+  margin: 15px 10px 50px 10px;
 }
 
 .product__button:hover {

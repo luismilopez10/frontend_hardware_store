@@ -73,7 +73,7 @@ const FormEditProduct: React.FunctionComponent = () => {
                         <div className="underline"></div>
                     </div>
                     <div className="input-box underline">
-                        <input type="number" min="0" placeholder="Product Price" required value={price} onChange={(e) => setPrice(parseInt(e.target.value))} />
+                        <input type="number" min="0" placeholder="Product Price" required value={price==0?"":price} onChange={(e) => setPrice(parseInt(e.target.value))} />
                         <div className="underline"></div>
                     </div>
                     <div className="input-box">

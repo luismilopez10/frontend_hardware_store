@@ -20,12 +20,11 @@ import { RootState } from './app/store'
 
 function App() {
 
-  const {user} = useSelector((state:RootState) => state.logged)
+  const {user} = useSelector((state:RootState) => state.logged);
   const dispatch = useDispatch();
   
   const logout = () => {
-    console.log("hola");
-    dispatch(logOutInReducer())    
+    dispatch(logOutInReducer());
   }
 
   return (

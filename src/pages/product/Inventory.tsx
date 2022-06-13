@@ -43,7 +43,7 @@ const Inventory = () => {
           {
             status === posibleStatus.PENDING ? <Loader /> : 
             
-            <div className='card-product d-flex flex-column justify-content-between shadow p-3 mb-2 bg-white rounded'>
+            <div className='card-product d-flex flex-column justify-content-between shadow p-3 mb-2 bg-light rounded'>
               {getInventoryProducts.map((product: inventoryProductType) => {
                 return (
                   <div key={product.id} className=''>
