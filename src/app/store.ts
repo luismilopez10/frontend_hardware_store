@@ -1,11 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { useDispatch } from "react-redux";
 import inventoryProductReducer from "../features/InventoryProductSlice"
+import providerReducer from "../features/ProviderSlice"
 
-export const store = configureStore({
+const store = configureStore({
     reducer: {
-        inventoryProducts: inventoryProductReducer,
+        inventoryProduct: inventoryProductReducer,
+        provider: providerReducer,
     },
 });
 
-export type RootState = ReturnType<typeof store.getState>
+export default store
+export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch
+export const useAppDispatch = () => useDispatch<AppDispatch>()

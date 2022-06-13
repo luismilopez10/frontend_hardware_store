@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { InventoryProductType } from '../../features/InventoryProductSlice'
+import { inventoryProductType } from '../../features/InventoryProductSlice'
 
 const postProductUrl = 'https://raulhwstore.herokuapp.com/api/v1/products/'
 
-export const postProduct = createAsyncThunk('postProduct', async (product: InventoryProductType) => {
+export const postProduct = createAsyncThunk('postProduct', async (product: inventoryProductType) => {
     const response = await fetch(postProductUrl, {
         method: 'POST',
         headers: {
@@ -11,5 +11,5 @@ export const postProduct = createAsyncThunk('postProduct', async (product: Inven
         },
         body: JSON.stringify(product),
     })
-    return (await response.json()) as InventoryProductType;
+    return (await response.json()) as inventoryProductType;
 })

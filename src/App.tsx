@@ -3,9 +3,12 @@ import './App.css'
 import './Nav.css'
 import { BrowserRouter, Link, Route, Routes } from 'react-router-dom'
 import Login from './pages/Login'
-import POS from './pages/POS'
-import Inventory from './pages/Inventory'
-import FormAddNewProduct from './pages/FormAddNewProduct'
+import POS from './pages/product/POS'
+import Inventory from './pages/product/Inventory'
+import FormAddNewProduct from './pages/product/FormAddNewProduct'
+import ProviderList from './components/provider/ProviderList'
+import Provider from './pages/provider/Provider'
+import FormAddNewProvider from './pages/provider/FormAddNewProvider'
 
 
 function App() {
@@ -41,8 +44,10 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />}/>
           <Route path="/pos" element={<POS />}/>
+          <Route path="/providers" element={<Provider />}/>
           <Route path="/inventory" element={<Inventory />}/>
           <Route path="/formaddnewproduct" element={<FormAddNewProduct />}/>
+          <Route path="/formaddnewprovider" element={<FormAddNewProvider />}/>
         </Routes>
       </BrowserRouter>
     </div>

@@ -1,9 +1,9 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { InventoryProductType } from '../../features/InventoryProductSlice'
+import { inventoryProductType } from '../../features/InventoryProductSlice'
 
 const deleteProductUrl = 'https://raulhwstore.herokuapp.com/api/v1/products/'
 
-export const deleteProduct = createAsyncThunk('deleteProduct', async (product: InventoryProductType) => {
+export const deleteProduct = createAsyncThunk('deleteProduct', async (product: inventoryProductType) => {
     const response = await fetch(`${deleteProductUrl}/${product.id}`, {
         method: 'DELETE'
     })

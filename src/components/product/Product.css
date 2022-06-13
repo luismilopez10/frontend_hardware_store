@@ -7,7 +7,7 @@
 
 .products{
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(270px, 2fr));
   gap: 200px;
   padding-top: 50px;
 }
@@ -15,7 +15,7 @@
 .product {
     position: relative;
     width: 250px;
-    height: 250px;
+    height: 270px;
     background-size: cover;
     border-radius: 20px;
     z-index: 1;
@@ -28,14 +28,19 @@
   
 .product__title {
     font-size: 19px;
-    margin-bottom: 5PX;
+    padding: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
 }
 
 .product__description {
     font-size: 14px;
+    padding: 0 10px; 
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    margin-bottom: 0rem;
 }
 
 .product__description:hover {
@@ -50,9 +55,9 @@
   margin-top: 15px;
   border-radius: 25px;
   background: linear-gradient( to right,  #4590fb 0%, #6aa5f8 100%);
-  margin: 20px 5px 50px 5px;
+  margin: 15px 5px 50px 5px;
 }
 .product__button:hover {
   background: linear-gradient( to left,  #4590fb 0%, #6aa5f8 100%);
-  margin: 20px 0 50px 0;
+  /* margin: 20px 0 50px 0; */
 }

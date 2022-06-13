@@ -1,5 +1,5 @@
 import { createAsyncThunk } from "@reduxjs/toolkit";
-import { InventoryProductType } from '../../features/InventoryProductSlice'
+import { inventoryProductType } from '../../features/InventoryProductSlice'
 
 const updateProductUrl = 'https://raulhwstore.herokuapp.com/api/v1/products/'
 
@@ -11,5 +11,5 @@ export const updateProduct = createAsyncThunk('updateProduct', async (product: I
         },
         body: JSON.stringify(product),
     })
-    return (await response.json()) as InventoryProductType;
+    return (await response.json()) as inventoryProductType;
 })
