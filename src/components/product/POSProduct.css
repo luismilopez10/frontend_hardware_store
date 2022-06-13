@@ -1,8 +1,8 @@
-.product {
+.pos__product {
     position: relative;
     flex: 1 150px;
     width: 200px;
-    height: 230px;
+    height: 250px;
     background-size: cover;
     border-radius: 20px;
     z-index: 1;
@@ -12,17 +12,8 @@
     margin: 0 10px 30px 10px;
     padding: 15px;
   }
-
   
-.card-product{
-	flex: 1 150px;
-	padding: 2px 2px 2px 5px;
-	margin-top: 50px;
-	margin-right: 2px;
-	margin-left: 2px;
-}
-  
-.product__title {
+.pos__product__title {
     font-size: 19px;
     padding: 10px;
     overflow: hidden;
@@ -30,7 +21,7 @@
     text-overflow: ellipsis;
 }
 
-.product__description {
+.pos__product__description {
     font-size: 14px;
     padding: 0 10px; 
     overflow: hidden;
@@ -39,7 +30,7 @@
     margin-bottom: 0rem;
 }
 
-.product__button {
+.pos__product__button {
   color: #fff;
   border: none;
   text-align: center;
@@ -49,7 +40,7 @@
   margin: 15px 12px 10px 12px;
 }
 
-.product__button:hover {
+.pos__product__button:hover {
   background: linear-gradient( to left,  #4590fb 0%, #6aa5f8 100%);
   cursor: default;
 }

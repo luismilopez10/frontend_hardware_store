@@ -41,16 +41,15 @@ const POSProductCard = (props: cartProductType) => {
   }
 
   return (
-    <div className='product'>
-      {/* <img src="https://definicion.de/wp-content/uploads/2014/12/tornillo.jpg" alt="" /> */}
-      <h3 className='product__title'><b>{props.name}</b></h3>
-      <p className='product__description'>{props.description}</p>
-      {/* <p className='product__description'><b>Stock:</b> {props.stock}</p> */}
-      <p className='product__description'><b>Price: $</b> {props.price}</p>
-      <input type="submit" className='product__button rounded' value="-" onClick={(e) => onMinus(e)} />
+    <div className='pos__product'>
+      <h3 className='pos__product__title'><b>{props.name}</b></h3>
+      <p className='pos__product__description'>{props.description}</p>
+      <p className='product__description'><b>Stock:</b> {props.stock}</p>
+      <p className='pos__product__description'><b>Price: $</b> {props.price}</p>
+      <input type="submit" className='pos__product__button rounded' value="-" onClick={(e) => onMinus(e)} />
       <span>{quantity}</span>
-      <input type="submit" className='product__button rounded' value="+" onClick={(e) => onPlus(e)} />
-      <input type="submit" className='product__button rounded' value="Add to cart" />
+      <input type="submit" className='pos__product__button rounded' value="+" onClick={(e) => onPlus(e)} />
+      <input type="submit" className='pos__product__button rounded' value="Add to cart" />
     </div>
   )
 }
