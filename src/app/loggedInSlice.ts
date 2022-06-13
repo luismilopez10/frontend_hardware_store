@@ -4,7 +4,6 @@ const initialState = {
   user: null
 }
 
-
 const loggedInSlice = createSlice(
   {
     name: 'logged',
@@ -14,13 +13,12 @@ const loggedInSlice = createSlice(
         const stateLoggedIn = {...state, user: action.payload}
         return stateLoggedIn
       },
-      logOutInReducer(){
+      logOutInReducer(){        
         return {user: null}
       }
     }
   }
 )
-
 
 export default loggedInSlice.reducer
 

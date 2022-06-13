@@ -11,16 +11,34 @@ import Provider from './pages/provider/Provider'
 import FormAddNewProvider from './pages/provider/FormAddNewProvider'
 import FormEditProduct from './pages/product/FormEditProduct'
 import ShoppingCart from './pages/bill/ShoppingCart'
+import SignIn from './SignIn'
+import { app } from './firebaseConfig'
+import { useDispatch, useSelector } from 'react-redux'
+import { logInInReducer, logOutInReducer } from './app/loggedInSlice'
+import { RootState } from './app/store'
 
 
 function App() {
 
-  const logged=true;
+  const {user} = useSelector((state:RootState) => state.logged)
+  const dispatch = useDispatch();
+  
+  const logout = () => {
+    console.log("hola");
+    dispatch(logOutInReducer())    
+  }
 
   return (
     <div>
       <BrowserRouter>
-        {logged ?
+        {user === null ?
+          <header>
+            <nav className="navbar fixed-top navbar-dark bg-dark nav__container">
+                <span className="nav__logo"></span>
+                <span className="navbar-brand">Raul's Hardware Store</span>
+            </nav>
+          </header>
+        : 
           <header>
             <nav className="navbar fixed-top navbar-dark bg-dark nav__container">
               <span className="nav__logo"></span>
@@ -37,19 +55,17 @@ function App() {
                       <Link to='/inventory' className="nav__link">Inventory</Link>
                   </li>
                   <li className="nav__item">
-                      <Link to='/login' className="nav__link">Logout</Link>
+                      <Link to='/' className="nav__link" onClick={()=>{logout()}}>Logout</Link>
                   </li>
               </ul>
             </nav>
           </header>
-        : 
-          <nav className="navbar fixed-top navbar-dark bg-dark nav__container">
-              <span className="nav__logo"></span>
-              <span className="navbar-brand">Raul's Hardware Store</span>
-          </nav>
         }
         <Routes>
+          <Route path="/" element={<Login />}/>
           <Route path="/login" element={<Login />}/>
+          <Route path="SignIn" element={<SignIn />}/>
+          <Route path="logIn" element={<Login />}/>
           <Route path="/pos" element={<POS />}/>
           <Route path="/providers" element={<Provider />}/>
           <Route path="/inventory" element={<Inventory />}/>

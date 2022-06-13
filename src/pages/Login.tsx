@@ -1,7 +1,42 @@
+import { signInWithPopup, GoogleAuthProvider, OAuthCredential } from "firebase/auth";
 import React from 'react'
+import { useDispatch } from "react-redux";
+import { useNavigate } from 'react-router-dom'
+import { logInInReducer } from "../app/loggedInSlice";
+import { auth } from "../firebaseConfig";
 import './Login.css'
 
+const providerGoogleAuth = new GoogleAuthProvider();
+
 const Login = () => {
+
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const signInWithGoogle = () => {
+
+      signInWithPopup(auth, providerGoogleAuth)
+      .then((result) => {
+        const credential:OAuthCredential | null = GoogleAuthProvider.credentialFromResult(result);
+  
+        const token = credential!.accessToken;
+        const user = result.user;
+
+          // console.log(user);
+  
+        dispatch(logInInReducer(user.displayName))
+        
+        navigate('/pos')
+
+      }).catch((error) => {        
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        const email = error.email;
+        const credential = GoogleAuthProvider.credentialFromError(error);
+      });
+    }
+
   return (
     <div className='login__body'>
       <div className="login__container">
@@ -21,10 +56,10 @@ const Login = () => {
         </form>
           <div className="option">or Connect With Social Media</div>
           <div className="google">
-            <a href="#"><i className="fab fa-google"></i>Sign in With Google</a>
+            <a href="#" onClick={() => signInWithGoogle()}>Sign in With Google</a>
           </div>
           <div className="github">
-            <a href="#"><i className="fab fa-facebook-f"></i>Sign in With GitHub</a>
+            <a href="#">Sign in With GitHub</a>
           </div>
       </div>
     </div>
@@ -32,3 +67,4 @@ const Login = () => {
 }
 
 export default Login
+
