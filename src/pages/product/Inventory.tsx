@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react'
 import { useSelector } from 'react-redux'
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { RootState } from '../../app/store'
 import InventoryProductCard from '../../components/product/InventoryProductCard'
 import './Inventory.css'
-import { GrFormAdd } from 'react-icons/gr'
 import { posibleStatus } from '../../features/posibleStatus';
 import { getAllProducts } from '../../actions/product/getAllProducts';
 import { useAppDispatch } from '../../app/store'
@@ -18,6 +17,7 @@ const Inventory = () => {
   const getInventoryProducts = useSelector(selectInventoryProductsState())
 
   const dispatch = useAppDispatch()
+  const navigate = useNavigate()
   
   useEffect(() => {
     if (status === posibleStatus.IDLE) {
@@ -25,24 +25,19 @@ const Inventory = () => {
     }
   }, [dispatch])
 
+  const onAdd = () => {
+    navigate("/formaddnewproduct")
+  }
+
   return (
     <div>
-      <div className='products__body'>
-        <h1>Inventory</h1>        
-        <div>
-          <Link to='/formaddnewproduct'>
-            <ul className="wrapper">
-              <li className="icon facebook">
-                <GrFormAdd />
-                <span className="tooltip">Add new product</span>
-                <span><i className="fab fa-facebook-f"></i></span>
-              </li>
-            </ul>
-          </Link>
+      
+      <div className='spaced__header'>
+          <h1>Inventory</h1>
+          <input className='btn btn-primary' type="submit" value="Add new product" onClick={() => onAdd()} />
         </div>
-      </div>
 
-      <div className='inventory__container container'>        
+      <div className='container'>        
       {
         status === posibleStatus.PENDING ? <Loader /> : 
         <div>

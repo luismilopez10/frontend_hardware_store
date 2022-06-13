@@ -2,8 +2,8 @@
     padding: 15px;
     width: 100%;
     margin-inline: auto;
-    padding-inline: 15px;
-    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.15);
+    padding-inline: 20px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.55);
 }
 
 .nav{
@@ -31,11 +31,16 @@
     column-gap: 20px;
 }
 
+.nav__item {
+    vertical-align: middle;
+}
+
 .nav__link {
     display: inline-block;
     text-decoration: none;
-    color: #000;
+    color: rgb(255, 255, 255) !important;
     position: relative;
+    margin-top: 15px !important;
 }
 
 .nav__link::after {
@@ -43,7 +48,7 @@
     position: absolute;
     left: 0;bottom: 0;
     width: 100%;height: 2px;
-    background-color: #000;
+    background-color: rgb(255, 255, 255);
     transform: scaleX(0);
     transform-origin: right;
     transition: transform .5s;
@@ -52,4 +57,5 @@
 .nav__link:hover::after {
     transform: scaleX(1);
     transform-origin: left;
+    color: #fff;
 }

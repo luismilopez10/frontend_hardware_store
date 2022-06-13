@@ -26,9 +26,6 @@ const Login = () => {
           <div className="github">
             <a href="#"><i className="fab fa-facebook-f"></i>Sign in With GitHub</a>
           </div>
-
-          <a href="#" className='icon'><i className='ri-github-line'></i></a>
-
       </div>
     </div>
   )

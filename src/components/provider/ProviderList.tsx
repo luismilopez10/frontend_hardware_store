@@ -21,8 +21,6 @@ const ProviderList = () => {
 
   return (
     <div>
-      <h1>Providers</h1>
-
       <table id="dtDynamicVerticalScrollExample" className="table table-striped table-bordered table-sm" width="100%" cellSpacing={0}>
         <thead>
           <tr>

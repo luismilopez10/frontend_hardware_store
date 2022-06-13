@@ -1,17 +1,18 @@
-import { nanoid } from '@reduxjs/toolkit';
 import React, { useState, useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { postProduct } from '../../actions/product/postProduct';
-import { inventoryProductType } from '../../features/InventoryProductSlice';
+import { editProduct, inventoryProductType, selectInventoryProductsState } from '../../features/InventoryProductSlice';
 import './FormAddNewProduct.css'
-import { useAppDispatch } from '../../app/store'
+import { RootState, useAppDispatch } from '../../app/store'
 import { useSelector } from 'react-redux';
 import { selectProvidersState, selectProvidersStatus } from '../../features/ProviderSlice';
 import { getAllProviders } from '../../actions/provider/getAllProviders';
 import { posibleStatus } from '../../features/posibleStatus';
+import { updateProduct } from '../../actions/product/updateProduct';
 
-const FormAddNewProduct: React.FunctionComponent = () => {
+const FormEditProduct: React.FunctionComponent = () => {
 
+    const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState();
@@ -19,41 +20,48 @@ const FormAddNewProduct: React.FunctionComponent = () => {
     const [minimum, setMinimum] = useState();
     const [maximum, setMaximum] = useState();
 
-    const dispatch = useAppDispatch()
-    const navigate = useNavigate()
-    const status = useSelector(selectProvidersStatus())
-    const getProviders = useSelector(selectProvidersState())
+    const dispatch = useAppDispatch();
+    const navigate = useNavigate();
+    const getEditInventoryProduct = useSelector((state:RootState) => state.inventoryProduct.editProduct);
+    const status = useSelector(selectProvidersStatus());
+    const getProviders = useSelector(selectProvidersState());
   
     useEffect(() => {
       if (status === posibleStatus.IDLE) {
-          dispatch(getAllProviders())
+          dispatch(getAllProviders());
       }
-    }, [dispatch])
 
-    const onAdd = async (e: React.FormEvent<HTMLFormElement>) => {
-        e.preventDefault()
+      setId(getEditInventoryProduct.id);
+      setName(getEditInventoryProduct.name);
+      setDescription(getEditInventoryProduct.description);
+      setPrice(getEditInventoryProduct.price);
+      setProviderId(getEditInventoryProduct.providerId);
+      setMinimum(getEditInventoryProduct.minimumAmount);
+      setMaximum(getEditInventoryProduct.maximumAmount);
+    }, [dispatch]);
+
+    const onEdit = async (e: React.FormEvent<HTMLFormElement>) => {
+        e.preventDefault();
 
         if (name && description && price && providerId && minimum && maximum && minimum < maximum) {
-            const newInventoryProduct: inventoryProductType = {
-                id: nanoid(), name: name, description: description, stock: 0, price: price, providerId: providerId, minimumAmount: minimum, maximumAmount: maximum
+            const editedInventoryProduct: inventoryProductType = {
+                id: id, name: name, description: description, stock: 0, price: price, providerId: providerId, minimumAmount: minimum, maximumAmount: maximum
             }
 
-            dispatch(postProduct(newInventoryProduct))
-            navigate("/inventory")
+            dispatch(updateProduct(editedInventoryProduct));
+            navigate("/inventory");
         } else if (minimum > maximum) {
-            alert("The minimum amount or products can't be greater than the maximum.")
-            setMinimum(0)
-            setMaximum(0)
-        } else if (!providerId) {
-            alert('Select the provider')
+            alert("The minimum amount or products can't be greater than the maximum.");
+            setMinimum(0);
+            setMaximum(0);
         }
     }
 
     return (
         <div className='newproductform__body'>
             <div className="newproductform__container">
-                <form onSubmit={(e) => onAdd(e)}>
-                    <div className="title">Add new product</div>
+                <form onSubmit={(e) => onEdit(e)}>
+                    <div className="title">Edit product</div>
                     <div className="input-box underline">
                         <input type="text" placeholder="Product Name" required value={name} onChange={(e) => setName(e.target.value)} />
                         <div className="underline"></div>
@@ -68,9 +76,10 @@ const FormAddNewProduct: React.FunctionComponent = () => {
                     </div>
                     <div className="input-box">
                         <select className='form-select' onChange={(e) => setProviderId(e.target.value)}>
-                            <option value="N/A" selected disabled>Select provider</option>
                             {getProviders.map(provider => {
-                                return <option value={provider.id}>{provider.name}</option>
+                                return provider.id === providerId ? 
+                                <option value={provider.id} selected>{provider.name}</option>
+                                :<option value={provider.id}>{provider.name}</option>
                             })}
                         </select>
                     </div>
@@ -83,7 +92,7 @@ const FormAddNewProduct: React.FunctionComponent = () => {
                         <div className="underline"></div>
                     </div>
                     <div className="input-box button">
-                        <input type="submit" name="" value="Add" />            
+                        <input type="submit" name="" value="Commit Edit" />            
                     </div>
                 </form>
             </div>
@@ -91,4 +100,4 @@ const FormAddNewProduct: React.FunctionComponent = () => {
     )
 }
 
-export default FormAddNewProduct
+export default FormEditProduct

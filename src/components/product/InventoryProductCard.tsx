@@ -4,27 +4,33 @@ import { RootState, useAppDispatch } from '../../app/store'
 import './Product.css'
 import { editProduct, inventoryProductType } from '../../features/InventoryProductSlice'
 import { useNavigate } from 'react-router-dom'
+import { deleteProduct } from '../../actions/product/deleteProduct'
 
 const InventoryProductCard = (props: inventoryProductType) => {
 
-  const dispatch = useAppDispatch()
-  const navigate = useNavigate()
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   
-  const onEdit = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
-    
-    console.log("aquíiiiii");
+  const onEdit = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    e.preventDefault();
     
     dispatch(editProduct({
+      id: props.id,
       name: props.name,
       description: props.description,
       price: props.price,
       providerId: props.providerId,
       minimumAmount: props.minimumAmount,
       maximumAmount: props.maximumAmount,
-    }))
+    }));
     
-    navigate("/formaddnewprovider")
+    navigate("/formeditproduct");
+  }
+  
+  const onDelete = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    e.preventDefault();
+    
+    dispatch(deleteProduct(props.id));
   }
 
   return (
@@ -36,10 +42,10 @@ const InventoryProductCard = (props: inventoryProductType) => {
       <p className='product__description'>Provider Id: {props.providerId}</p>
       <p className='product__description'>Minimum: {props.minimumAmount}</p>
       <p className='product__description'>Maximum: {props.maximumAmount}</p>
-      <input type="submit" className='product__button' value="Edit" onClick={() => onEdit} />
-      <input type="submit" className='product__button' value="Delete" />
+      <input type="submit" className='product__button' value="Edit" onClick={(e) => onEdit(e)} />
+      <input type="submit" className='product__button' value="Delete" onClick={(e) => onDelete(e)} />
     </div>
   )
 }
 
-export default InventoryProductCard
+export default InventoryProductCard;

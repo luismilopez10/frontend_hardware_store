@@ -9,6 +9,7 @@ import FormAddNewProduct from './pages/product/FormAddNewProduct'
 import ProviderList from './components/provider/ProviderList'
 import Provider from './pages/provider/Provider'
 import FormAddNewProvider from './pages/provider/FormAddNewProvider'
+import FormEditProduct from './pages/product/FormEditProduct'
 
 
 function App() {
@@ -19,8 +20,11 @@ function App() {
     <div>
       <BrowserRouter>
         {logged ?
-          <nav className="nav nav__container">
+          <header>
+            <nav className="navbar fixed-top navbar-dark bg-dark nav__container">
               <span className="nav__logo"></span>
+              <span className="navbar-brand">Raul's Hardware Store</span>
+
               <ul className="nav__list">
                   <li className="nav__item">
                       <Link to='/' className="nav__link">POS</Link>
@@ -35,10 +39,12 @@ function App() {
                       <Link to='/login' className="nav__link">Logout</Link>
                   </li>
               </ul>
-          </nav>
+            </nav>
+          </header>
         : 
-          <nav className="nav nav__container">
+          <nav className="navbar fixed-top navbar-dark bg-dark nav__container">
               <span className="nav__logo"></span>
+              <span className="navbar-brand">Raul's Hardware Store</span>
           </nav>
         }
         <Routes>
@@ -47,6 +53,7 @@ function App() {
           <Route path="/providers" element={<Provider />}/>
           <Route path="/inventory" element={<Inventory />}/>
           <Route path="/formaddnewproduct" element={<FormAddNewProduct />}/>
+          <Route path="/formeditproduct" element={<FormEditProduct />}/>
           <Route path="/formaddnewprovider" element={<FormAddNewProvider />}/>
         </Routes>
       </BrowserRouter>

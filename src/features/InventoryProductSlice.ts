@@ -18,6 +18,7 @@ type inventoryProductType = {
 }
 
 type editInventoryProductType = {
+    id: string,
     name: string,
     description: string,
     price: number,
@@ -36,6 +37,7 @@ interface initialStateInventoryProductType {
 const initialState: initialStateInventoryProductType = {
     products: [],
     editProduct: {
+        id: "",
         name: "",
         description: "",
         price: 0,
@@ -51,6 +53,7 @@ const inventoryProductSlice = createSlice({
     initialState,
     reducers: {
         editProduct: (state: initialStateInventoryProductType, action: PayloadAction<editInventoryProductType>) => {
+            state.editProduct.id = action.payload.id
             state.editProduct.name = action.payload.name
             state.editProduct.description = action.payload.description
             state.editProduct.price = action.payload.price
