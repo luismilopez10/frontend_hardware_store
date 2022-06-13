@@ -16,6 +16,8 @@ type Props = {}
 
 const POS = (props: Props) => {
 
+  const {user} = useSelector((state:RootState) => state.logged);
+
   const error = useSelector(selectInventoryProductsFetchError())
   const status = useSelector(selectInventoryProductsStatus())
   const getInventoryProducts = useSelector(selectInventoryProductsState())
@@ -24,8 +26,11 @@ const POS = (props: Props) => {
   const navigate = useNavigate()
   
   useEffect(() => {
+    if (user === null) {
+      navigate('/login');
+    } 
     if (status === posibleStatus.IDLE) {
-        dispatch(getAllProducts())
+        dispatch(getAllProducts());
     }
   }, [dispatch])
 
@@ -35,7 +40,6 @@ const POS = (props: Props) => {
 
   return (
     <div>
-      
       <div className='spaced__header'>
         <h1>Point of sale</h1>        
         <AiOutlineShoppingCart className='cart__icon' onClick={() => onAdd()} />

@@ -12,6 +12,8 @@ import { updateProduct } from '../../actions/product/updateProduct';
 
 const FormEditProduct: React.FunctionComponent = () => {
 
+    const {user} = useSelector((state:RootState) => state.logged);
+    
     const [id, setId] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
@@ -28,18 +30,21 @@ const FormEditProduct: React.FunctionComponent = () => {
     const getProviders = useSelector(selectProvidersState());
   
     useEffect(() => {
-      if (status === posibleStatus.IDLE) {
-          dispatch(getAllProviders());
-      }
+        if (user === null) {
+            navigate('/login');
+        } 
+        if (status === posibleStatus.IDLE) {
+            dispatch(getAllProviders());
+        }
 
-      setId(getEditInventoryProduct.id);
-      setName(getEditInventoryProduct.name);
-      setDescription(getEditInventoryProduct.description);
-      setStock(getEditInventoryProduct.stock);
-      setPrice(getEditInventoryProduct.price);
-      setProviderId(getEditInventoryProduct.providerId);
-      setMinimum(getEditInventoryProduct.minimumAmount);
-      setMaximum(getEditInventoryProduct.maximumAmount);
+        setId(getEditInventoryProduct.id);
+        setName(getEditInventoryProduct.name);
+        setDescription(getEditInventoryProduct.description);
+        setStock(getEditInventoryProduct.stock);
+        setPrice(getEditInventoryProduct.price);
+        setProviderId(getEditInventoryProduct.providerId);
+        setMinimum(getEditInventoryProduct.minimumAmount);
+        setMaximum(getEditInventoryProduct.maximumAmount);
     }, [dispatch]);
 
     const onEdit = async (e: React.FormEvent<HTMLFormElement>) => {

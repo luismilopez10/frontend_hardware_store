@@ -12,6 +12,8 @@ import Loader from '../../components/Loader'
 
 const Inventory = () => {
 
+  const {user} = useSelector((state:RootState) => state.logged);
+
   const error = useSelector(selectInventoryProductsFetchError())
   const status = useSelector(selectInventoryProductsStatus())
   const getInventoryProducts = useSelector(selectInventoryProductsState())
@@ -20,8 +22,11 @@ const Inventory = () => {
   const navigate = useNavigate()
   
   useEffect(() => {
+    if (user === null) {
+      navigate('/login');
+    }
     if (status === posibleStatus.IDLE) {
-        dispatch(getAllProducts())
+      dispatch(getAllProducts());
     }
   }, [dispatch])
 

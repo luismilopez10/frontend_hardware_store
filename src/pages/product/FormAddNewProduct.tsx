@@ -4,7 +4,7 @@ import { Link, useNavigate } from 'react-router-dom'
 import { postProduct } from '../../actions/product/postProduct';
 import { inventoryProductType } from '../../features/InventoryProductSlice';
 import './FormAddNewProduct.css'
-import { useAppDispatch } from '../../app/store'
+import { RootState, useAppDispatch } from '../../app/store'
 import { useSelector } from 'react-redux';
 import { selectProvidersState, selectProvidersStatus } from '../../features/ProviderSlice';
 import { getAllProviders } from '../../actions/provider/getAllProviders';
@@ -12,6 +12,8 @@ import { posibleStatus } from '../../features/posibleStatus';
 
 const FormAddNewProduct: React.FunctionComponent = () => {
 
+    const {user} = useSelector((state:RootState) => state.logged);
+    
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [price, setPrice] = useState(0);
@@ -25,8 +27,11 @@ const FormAddNewProduct: React.FunctionComponent = () => {
     const getProviders = useSelector(selectProvidersState())
   
     useEffect(() => {
+        if (user === null) {
+            navigate('/login');
+        } 
       if (status === posibleStatus.IDLE) {
-          dispatch(getAllProviders())
+          dispatch(getAllProviders());
       }
     }, [dispatch])
 

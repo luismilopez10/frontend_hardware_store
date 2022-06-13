@@ -27,8 +27,6 @@ function App() {
     dispatch(logOutInReducer());
   }
 
-  const logged = true;
-
   return (
     <div>
       <BrowserRouter>
