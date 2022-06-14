@@ -34,7 +34,7 @@ const POS = (props: Props) => {
     }
   }, [dispatch])
 
-  const onAdd = () => {
+  const onShoppingCart = () => {
     navigate("/shoppingcart")
   }
 
@@ -42,7 +42,7 @@ const POS = (props: Props) => {
     <div>
       <div className='spaced__header'>
         <h1>Point of sale</h1>        
-        <AiOutlineShoppingCart className='cart__icon' onClick={() => onAdd()} />
+        <AiOutlineShoppingCart className='cart__icon' onClick={() => onShoppingCart()} />
       </div>
       <hr />
 

@@ -9,19 +9,27 @@ type billType = {
     date: string,
     clientName: string,
     employeeName: string,
-    productsAmount: string;
-    productsId: string[],
+    products: object,
     totalPrice: number,
 }
 
 interface initialStateBillType {
     bills: billType[],
+    billInCurrentOrder: billType,
     status: posibleStatus,
     error: string | null
 }
 
 const initialState: initialStateBillType = {
     bills: [],
+    billInCurrentOrder: {
+        id: "",
+        date: "",
+        clientName: "",
+        employeeName: "",
+        products: {},
+        totalPrice: 0,
+    },
     status: posibleStatus.IDLE,
     error: null,
 }
@@ -30,7 +38,14 @@ const billSlice = createSlice({
     name: "bill",
     initialState,
     reducers: {
-
+        editBill: (state: initialStateBillType, action: PayloadAction<billType>) => {
+            state.billInCurrentOrder.id = action.payload.id
+            state.billInCurrentOrder.date = action.payload.date
+            state.billInCurrentOrder.clientName = action.payload.clientName
+            state.billInCurrentOrder.employeeName = action.payload.employeeName
+            state.billInCurrentOrder.products = action.payload.products
+            state.billInCurrentOrder.totalPrice = action.payload.totalPrice
+        },
     },
     extraReducers: (builder) => {
         //GET
@@ -69,3 +84,5 @@ export default billSlice.reducer
 export const selectBillsState = () => (state: RootState) => state.bill.bills
 export const selectBillsStatus = () => (state: RootState) => state.bill.status
 export const selectBillsFetchError = () => (state: RootState) => state.bill.error
+
+export const {editBill} = billSlice.actions;
