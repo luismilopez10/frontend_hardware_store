@@ -16,7 +16,7 @@ import { app } from './firebaseConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import { logInInReducer, logOutInReducer } from './app/loggedInSlice'
 import { RootState } from './app/store'
-import FormOrderToProvider from './pages/order/FormOrderToProvider'
+import FormOrderToProvider from './pages/receipt/FormOrderToProvider'
 
 
 function App() {

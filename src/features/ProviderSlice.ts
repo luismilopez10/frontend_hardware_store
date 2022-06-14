@@ -52,7 +52,7 @@ const providerSlice = createSlice({
         })
         builder.addCase(postProvider.rejected, (state, action) => {
             state.status = posibleStatus.FAILED
-            state.error = "Something went wrong while creating a provider"
+            state.error = "Something went wrong while creating the provider"
         })
     }
 })
