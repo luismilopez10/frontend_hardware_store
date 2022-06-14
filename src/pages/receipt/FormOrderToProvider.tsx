@@ -9,12 +9,15 @@ import { selectProvidersState, selectProvidersStatus } from '../../features/Prov
 import { getAllProviders } from '../../actions/provider/getAllProviders';
 import { posibleStatus } from '../../features/posibleStatus';
 import { updateProduct } from '../../actions/product/updateProduct';
+import { receiptType } from '../../features/ReceiptSlice';
+import { nanoid } from '@reduxjs/toolkit';
+import { postReceipt } from '../../actions/receipt/postReceipt';
 
 const FormOrderToProvider: React.FunctionComponent = () => {
 
     const {user} = useSelector((state:RootState) => state.logged);
     
-    const [id, setId] = useState("");
+    const [InventoryProductId, setInventoryProductId] = useState("");
     const [name, setName] = useState("");
     const [description, setDescription] = useState("");
     const [stock, setStock] = useState(0);
@@ -38,7 +41,7 @@ const FormOrderToProvider: React.FunctionComponent = () => {
             dispatch(getAllProviders());
         }
 
-        setId(getEditInventoryProduct.id);
+        setInventoryProductId(getEditInventoryProduct.id);
         setName(getEditInventoryProduct.name);
         setDescription(getEditInventoryProduct.description);
         setStock(getEditInventoryProduct.stock);
@@ -55,9 +58,14 @@ const FormOrderToProvider: React.FunctionComponent = () => {
             alert("Maximum amount of product reached. You can order up to " + (maximum-stock) + " units of this product.");
         } else if (amount) {            
             const productToOrder: editInventoryProductType = {
-                id: id, name: name, description: description, stock: stock+amount, price: price, providerId: providerId, minimumAmount: minimum, maximumAmount: maximum
+                id: InventoryProductId, name: name, description: description, stock: stock+amount, price: price, providerId: providerId, minimumAmount: minimum, maximumAmount: maximum
+            }
+
+            const receipt: receiptType = {
+                id: nanoid(), date: "", productId: InventoryProductId, productAmount: amount, providerId: providerId
             }
             
+            dispatch(postReceipt(receipt));
             dispatch(updateProduct(productToOrder));
             navigate("/inventory");
         }
