@@ -16,6 +16,7 @@ import { app } from './firebaseConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import { logInInReducer, logOutInReducer } from './app/loggedInSlice'
 import { RootState } from './app/store'
+import FormOrderToProvider from './pages/order/FormOrderToProvider'
 
 
 function App() {
@@ -72,6 +73,7 @@ function App() {
           <Route path="/formeditproduct" element={<FormEditProduct />}/>
           <Route path="/formaddnewprovider" element={<FormAddNewProvider />}/>
           <Route path="/shoppingcart" element={<ShoppingCart />}/>
+          <Route path="/formordertoprovider" element={<FormOrderToProvider />}/>
         </Routes>
       </BrowserRouter>
     </div>

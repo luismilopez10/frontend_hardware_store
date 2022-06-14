@@ -34,9 +34,27 @@ const InventoryProductCard = (props: inventoryProductType) => {
     dispatch(deleteProduct(props.id));
   }
 
+  const onOrderToProvider = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    e.preventDefault();
+
+    dispatch(editProduct({
+      id: props.id,
+      name: props.name,
+      description: props.description,
+      stock: props.stock,
+      price: props.price,
+      providerId: props.providerId,
+      minimumAmount: props.minimumAmount,
+      maximumAmount: props.maximumAmount,
+    }));
+
+    navigate('/formordertoprovider');
+  }
+
   return (
     <div className='product'>
-      <h3 className='product__title'><b>{props.name}</b></h3>
+      <h3 className='product__title'>
+      <input type="submit" className='product__orderbutton' value="Order" onClick={(e) => onOrderToProvider(e)} /><b>{props.name}</b></h3>
       <p className='product__description'>{props.description}</p>
       <p className='product__description'><b>Stock:</b> {props.stock}</p>
       <p className='product__description'><b>Price: $</b> {props.price}</p>

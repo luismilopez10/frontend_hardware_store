@@ -1,7 +1,7 @@
 .product {
     position: relative;
     flex: 1 150px;
-    width: 230px;
+    width: 280px;
     height: 270px;
     background-size: cover;
     border-radius: 20px;
@@ -29,6 +29,7 @@
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
+    text-align: left;
 }
 
 .product__description {
@@ -40,7 +41,24 @@
     margin-bottom: 0rem;
 }
 
+.product__orderbutton {
+  font-size: 14px;
+  color: #fff;
+  border: none;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 25px;
+  background: linear-gradient( to right, #439949 0%, #28632e 100%);
+  margin-right: 15px;
+  margin-left: 5px;
+}
+
+.product__orderbutton:hover {
+  background: linear-gradient( to left, #46a14d 0%, #35803b 100%);
+}
+
 .product__button {
+  width: 85px;
   font-size: 14px;
   color: #fff;
   border: none;
@@ -49,7 +67,7 @@
   margin-top: 15px;
   border-radius: 25px;
   background: linear-gradient( to right,  #4590fb 0%, #6aa5f8 100%);
-  margin: 15px 10px 50px 10px;
+  margin: 15px 15px 50px 15px;
 }
 
 .product__button:hover {
