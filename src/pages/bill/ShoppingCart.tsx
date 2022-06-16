@@ -48,8 +48,8 @@ const ShoppingCart = () => {
     if (user === null) {
       navigate('/login');
     }
-    // console.log(getAllProductsInCurrentBill);
-    // console.log(unicIdOfEachProduct);
+    console.log(getAllProductsInCurrentBill);
+    console.log(unicIdOfEachProduct);
     console.log(finalProductListForBill);
   }, [dispatch]);
 
