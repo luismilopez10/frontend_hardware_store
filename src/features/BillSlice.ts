@@ -9,7 +9,7 @@ type billType = {
     date: string,
     clientName: string,
     employeeName: string,
-    products: object,
+    products: billInCurrentOrderType[],
     totalPrice: number,
 }
 
@@ -20,6 +20,13 @@ interface initialStateBillType {
     error: string | null
 }
 
+interface billInCurrentOrderType {
+    "id": string,
+    "name": string,
+    "price": number,
+    "amount": number
+  }
+
 const initialState: initialStateBillType = {
     bills: [],
     billInCurrentOrder: {
@@ -27,7 +34,7 @@ const initialState: initialStateBillType = {
         date: "",
         clientName: "",
         employeeName: "",
-        products: {},
+        products: [],
         totalPrice: 0,
     },
     status: posibleStatus.IDLE,
@@ -79,6 +86,7 @@ const billSlice = createSlice({
 
 export type { billType }
 export type { initialStateBillType }
+export type { billInCurrentOrderType }
 export default billSlice.reducer
 
 export const selectBillsState = () => (state: RootState) => state.bill.bills

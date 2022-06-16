@@ -10,28 +10,25 @@ import { editBill } from '../../features/BillSlice'
 const POSProductCard = (props: cartProductType) => {
 
   const [thisProductAmount, setThisProductAmount] = useState(1)
-  
-  const [thisProduct, setThisProduct] = useState({});
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate();
 
-  const getBillInCurrentOrder = useSelector((state:RootState) => state.bill.billInCurrentOrder);
+  const getProductsInCurrentBill = useSelector((state:RootState) => state.bill.billInCurrentOrder.products);
   
   const onAddToCart = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     e.preventDefault();
-
-    setThisProduct({
-      // TODO: Crear la <Key, Value> del producto
-      "": {thisProductAmount}
-    })
 
     dispatch(editBill({
       id: "",
       date: "",
       clientName: "",
       employeeName: "",
-      products: {...getBillInCurrentOrder.products, products: thisProduct},
+      products: [...getProductsInCurrentBill,{
+        "id": props.id,
+        "name": props.name,
+        "price": props.price,
+        "amount": thisProductAmount
+      }],
       totalPrice: 0,
     }));
   }

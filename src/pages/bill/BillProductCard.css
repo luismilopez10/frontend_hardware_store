@@ -1,0 +1,65 @@
+.bill__product {
+    position: relative;
+    flex: 1 150px;
+    width: 300px;
+    height: 170px;
+    background-size: cover;
+    border-radius: 20px;
+    z-index: 1;
+    overflow: hidden;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.25);
+    text-align: center;
+    margin: 0 10px 30px 10px;
+    padding: 15px;
+    background-color: #fff;
+  }
+  
+  .bill__product__title {
+    font-size: 19px;
+    padding: 10px;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: left;
+  }
+  
+  .bill__product__description {
+    font-size: 14px;
+    padding: 0 13px; 
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin-bottom: 0rem;
+  }
+  
+  .bill__product__button {
+  color: #fff;
+  border: none;
+  text-align: center;
+  padding: 2px 8px;
+  border-radius: 25%;
+  background: linear-gradient( to right,  #4590fb 0%, #6aa5f8 100%);
+  margin: 15px 12px 10px 12px;
+  }
+  
+  .bill__product__button:hover {
+  background: linear-gradient( to left,  #4590fb 0%, #6aa5f8 100%);
+  cursor: default;
+  }
+  
+
+.bill__deletebutton {
+  font-size: 14px;
+  color: #fff;
+  border: none;
+  text-align: center;
+  padding: 6px 10px;
+  border-radius: 25px;
+  background: linear-gradient( to right, #c5664a 0%, #7a3f2d 100%);
+  margin-right: 15px;
+  margin-left: 5px;
+}
+
+.bill__deletebutton:hover {
+  background: linear-gradient( to left, #c5664a 0%, #7a3f2d 100%);
+}

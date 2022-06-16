@@ -18,7 +18,6 @@ const POS = (props: Props) => {
 
   const {user} = useSelector((state:RootState) => state.logged);
 
-  const error = useSelector(selectInventoryProductsFetchError())
   const status = useSelector(selectInventoryProductsStatus())
   const getInventoryProducts = useSelector(selectInventoryProductsState())
 
