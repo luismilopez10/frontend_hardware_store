@@ -16,14 +16,7 @@ const ShoppingCart = () => {
 
   const getAllProductsInCurrentBill = useSelector((state:RootState) => state.bill.billInCurrentOrder.products);
 
-  const unicIdOfEachProduct = [...new Set(getAllProductsInCurrentBill.map(product => product.id))];
-    
-  const totalBillPrice = (unicIdOfEachProduct.map(productId => getAllProductsInCurrentBill
-      .filter(product => product.id === productId)
-      .reduce((a,b) => a+b.price,0))
-      .reduce((a,b) => a+b,0)
-  );
-  
+  const unicIdOfEachProduct = [...new Set(getAllProductsInCurrentBill.map(product => product.id))];  
 
     // const finalProductListForBill = getUnicIdOfEachProduct.map(productId => {
     //     getAllProductsInCurrentBill
@@ -37,12 +30,16 @@ const ShoppingCart = () => {
     //     })
     // });
 
-
     const finalProductListForBill = unicIdOfEachProduct
         .map(productId => getAllProductsInCurrentBill
             .filter(product => product.id === productId)
     );
-
+    
+    const totalBillPrice = (unicIdOfEachProduct.map(productId => getAllProductsInCurrentBill
+        .filter(product => product.id === productId)
+        .reduce((a,b) => a+b.price,0))
+        .reduce((a,b) => a+b,0)
+    );
 
   useEffect(() => {
     if (user === null) {
@@ -52,7 +49,6 @@ const ShoppingCart = () => {
     console.log(unicIdOfEachProduct);
     console.log(finalProductListForBill);
   }, [dispatch]);
-
 
 
   const onDelete = () => {
