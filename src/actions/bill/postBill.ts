@@ -4,7 +4,7 @@ import { billType } from "../../features/BillSlice";
 const postBillUrl = 'https://raulhwstore.herokuapp.com/api/v1/bills/'
 
 export const postBill = createAsyncThunk('postBill', async (bill: billType) => {
-    const response = await fetch(postBillUrl, {
+    const response = await fetch(postBillUrl, {        
         method: 'POST',
         headers: {
             'Content-type': 'application/json; charset=UTF-8',

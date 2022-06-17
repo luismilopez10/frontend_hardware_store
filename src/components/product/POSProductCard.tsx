@@ -1,34 +1,34 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import './POSProduct.css'
 import { useSelector } from 'react-redux'
 import { RootState, useAppDispatch } from '../../app/store'
-import { editProduct, cartProductType, cartProduct } from '../../features/InventoryProductSlice'
-import { useNavigate } from 'react-router-dom'
-import { deleteProduct } from '../../actions/product/deleteProduct'
+import { cartProductType } from '../../features/InventoryProductSlice'
 import { editBill } from '../../features/BillSlice'
 
 const POSProductCard = (props: cartProductType) => {
 
+  const dispatch = useAppDispatch();
+  
   const [thisProductAmount, setThisProductAmount] = useState(1)
 
-  const dispatch = useAppDispatch();
-
   const getProductsInCurrentBill = useSelector((state:RootState) => state.bill.billInCurrentOrder.products);
-  
+
   const onAddToCart = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     e.preventDefault();
+
+    const newProductToAdd = {
+      "id": props.id,
+      "name": props.name,
+      "price": props.price,
+      "amount": thisProductAmount
+    }
 
     dispatch(editBill({
       id: "",
       date: "",
       clientName: "",
       employeeName: "",
-      products: [...getProductsInCurrentBill,{
-        "id": props.id,
-        "name": props.name,
-        "price": props.price,
-        "amount": thisProductAmount
-      }],
+      products: [newProductToAdd],
       totalPrice: 0,
     }));
   }

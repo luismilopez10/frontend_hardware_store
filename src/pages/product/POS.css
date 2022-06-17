@@ -5,7 +5,8 @@
 }
 
 .cart__icon {
-  font-size: 30px;
+  font-size: 35px;
+  margin-right: 50px;
 }
 .cart__icon:hover {
   cursor: pointer;

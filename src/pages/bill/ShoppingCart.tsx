@@ -1,77 +1,121 @@
+import { nanoid } from '@reduxjs/toolkit';
 import React, { useEffect, useState } from 'react'
-import { AiOutlineDelete } from 'react-icons/ai';
+import { AiOutlineDelete, AiOutlineShoppingCart } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { postBill } from '../../actions/bill/postBill';
 import { RootState, useAppDispatch } from '../../app/store';
-import { billInCurrentOrderType } from '../../features/BillSlice';
+import { billInCurrentOrderType, editBill } from '../../features/BillSlice';
 import BillProductCard from './BillProductCard';
 import './ShoppingCart.css'
 
 const ShoppingCart = () => {
-    
-  const {user} = useSelector((state:RootState) => state.logged);
+
+  const { user } = useSelector((state: RootState) => state.logged);
+  const getProductsInCurrentBill = useSelector((state:RootState) => state.bill.billInCurrentOrder.products);
 
   const dispatch = useAppDispatch();
-  const navigate = useNavigate()
+  const navigate = useNavigate();
+  const [clientName, setClientName] = useState("");
 
-  const getAllProductsInCurrentBill = useSelector((state:RootState) => state.bill.billInCurrentOrder.products);
+  const getCurrentBill = useSelector((state: RootState) => state.bill.billInCurrentOrder);
 
-  const unicIdOfEachProduct = [...new Set(getAllProductsInCurrentBill.map(product => product.id))];  
+  const unicIdOfEachProduct = [...new Set(getCurrentBill.products.map(product => product.id))];
 
-    // const finalProductListForBill = getUnicIdOfEachProduct.map(productId => {
-    //     getAllProductsInCurrentBill
-    //     .filter(product => product.id === productId)
-    //     .map(unicProduct => {
-    //         var productList = new Map();
-    //         productList.set("id", unicProduct.id);
-    //         productList.set("name", unicProduct.name);
-    //         productList.set("price", unicProduct.price);
-    //         productList.set("amount", unicProduct.amount);
-    //     })
-    // });
-
-    const finalProductListForBill = unicIdOfEachProduct
-        .map(productId => getAllProductsInCurrentBill
-            .filter(product => product.id === productId)
+  const finalProductListForBill = unicIdOfEachProduct
+    .map(productId => getCurrentBill.products
+      .filter(product => product.id === productId)
     );
-    
-    const totalBillPrice = (unicIdOfEachProduct.map(productId => getAllProductsInCurrentBill
-        .filter(product => product.id === productId)
-        .reduce((a,b) => a+b.price,0))
-        .reduce((a,b) => a+b,0)
-    );
+
+  const totalCurrentPrice = getCurrentBill.products
+    .map(product => product.price*product.amount)
+    .reduce((a, b) => a + b, 0);
+
+  const updateTotalBillPrice = () => {
+    dispatch(editBill({
+      id: "",
+      date: "",
+      clientName: "",
+      employeeName: "",
+      products: [...getCurrentBill.products],
+      totalPrice: totalCurrentPrice,
+    }));
+  };
+
 
   useEffect(() => {
     if (user === null) {
       navigate('/login');
     }
-    console.log(getAllProductsInCurrentBill);
-    console.log(unicIdOfEachProduct);
-    console.log(finalProductListForBill);
+    updateTotalBillPrice();
   }, [dispatch]);
 
 
-  const onDelete = () => {
-    
+  const onGenerateBill = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
+    e.preventDefault();
+
+    dispatch(editBill({
+      id: nanoid(),
+      date: "",
+      clientName: clientName === "" ? "Generic Client" : clientName,
+      employeeName: user === null ? "Don Raúl" : user,
+      products: getProductsInCurrentBill,
+      totalPrice: totalCurrentPrice,
+    }));    
+
+    // var fechaEnMiliseg = Date.now();
+
+    dispatch(postBill({
+      id: nanoid(),
+      date: "2022-06-17",
+      clientName: clientName === "" ? "Generic Client" : clientName,
+      employeeName: user === null ? "Don Raúl" : user,
+      products: getProductsInCurrentBill,
+      totalPrice: totalCurrentPrice,
+    }));
+    // setClientName("");
+
+    // dispatch(editBill({
+    //   id: "",
+    //   date: "",
+    //   clientName: "",
+    //   employeeName: "",
+    //   products: [],
+    //   totalPrice: 0,
+    // }));
+
+    navigate('/pos');
   }
 
   return (
     <div className='container'>
-      {getAllProductsInCurrentBill.flatMap((product: billInCurrentOrderType) => {
+      <div className='spaced__header'>
+        <AiOutlineShoppingCart className='cart__icon' />
+        <h1>Shopping Cart</h1>
+        <input type="submit" className='shoppingcart__button rounded' value="Generate Bill" onClick={(e) => onGenerateBill(e)} />
+      </div>
+      <p className='product__description'><b>Total: </b>${getCurrentBill.totalPrice}</p>
+
+      <div className="newproductform__container">
+        <div className="input-box underline">
+          <input type="text" placeholder="Client name" required value={clientName} onChange={(e) => setClientName(e.target.value)} />
+          <div className="underline"></div>
+        </div>
+      </div>
+
+      <hr />
+
+      {getCurrentBill.products.map((product: billInCurrentOrderType) => {
         return (
-          <div key={product.id} className=''>
-            <BillProductCard 
-              id={product.id} 
-              name={product.name} 
-              price={product.price} 
+          <div key={product.id} className='card'>
+            <BillProductCard
+              id={product.id}
+              name={product.name}
+              price={product.price}
               amount={product.amount}
             />
           </div>)
       })}
-      <div>
-        <p className='bill__product__description'>Total: <b>$</b>{totalBillPrice}</p>
-        <input type="submit" className='bill__product__button rounded' value="Confirm Sell" onClick={(e) => onDelete()} />
-      </div>
     </div>
   )
 }

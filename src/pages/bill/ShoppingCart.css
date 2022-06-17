@@ -1,56 +1,98 @@
-.bill__product {
+*:focus,
+*:active {
+  outline: none !important;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* .shoppingcart__container {
+  max-width: 365px;
+  margin: 30px auto;
+  overflow: auto;
+  min-height: 300px;
+  border: 1px solid steelblue;
+  padding: 30px;
+  border-radius: 5px;
+} */
+
+.wrapper {
+  display: inline-flex;
+  list-style: none;
+}
+
+.wrapper .icon {
   position: relative;
-  flex: 1 150px;
-  width: 300px;
-  height: 200px;
-  background-size: cover;
-  border-radius: 20px;
-  z-index: 1;
-  overflow: hidden;
-  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.25);
-  text-align: center;
-  margin: 0 10px 30px 10px;
+  background: #4590fb;
+  border-radius: 50%;
   padding: 15px;
-  background-color: #fff;
+  margin: 10px;
+  width: 50px;
+  height: 50px;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+  transition: all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-h3 span {
+.wrapper .tooltip {
+  position: absolute;
+  top: 0;
   font-size: 12px;
-  padding-left: 110px;
+  background: #fff;
+  color: #fff;
+  padding: 5px 8px;
+  border-radius: 5px;
+  box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.bill__product h3 span {
-  justify-content: space- !important;
+.wrapper .tooltip::before {
+  position: absolute;
+  content: "";
+  height: 8px;
+  width: 8px;
+  background: #fff;
+  bottom: -3px;
+  left: 50%;
+  transform: translate(-50%) rotate(45deg);
+  transition: all 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
 }
 
-.bill__product__title {
-  font-size: 19px;
-  padding: 10px;
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
+.wrapper .icon:hover .tooltip {
+  top: -45px;
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
 }
 
-.bill__product__description {
-  font-size: 14px;
-  padding: 0 13px; 
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  margin-bottom: 0rem;
+.wrapper .icon:hover span,
+.wrapper .icon:hover .tooltip {
+  text-shadow: 0px -1px 0px rgba(0, 0, 0, 0.1);
 }
 
-.bill__product__button {
+.wrapper .facebook:hover,
+.wrapper .facebook:hover .tooltip,
+.wrapper .facebook:hover .tooltip::before {
+  background: #4590fb;
+  color: #fff;
+}
+
+.shoppingcart__button {
 color: #fff;
 border: none;
 text-align: center;
 padding: 2px 8px;
 border-radius: 25%;
 background: linear-gradient( to right,  #4590fb 0%, #6aa5f8 100%);
-margin: 15px 12px 10px 12px;
+margin: 15px 12px 10px 20px;
 }
 
-.bill__product__button:hover {
+.shoppingcart__button:hover {
 background: linear-gradient( to left,  #4590fb 0%, #6aa5f8 100%);
 cursor: default;
 }
