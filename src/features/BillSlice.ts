@@ -50,21 +50,23 @@ const billSlice = createSlice({
             state.billInCurrentOrder.date = action.payload.date;
             state.billInCurrentOrder.clientName = action.payload.clientName;
             state.billInCurrentOrder.employeeName = action.payload.employeeName;
-
             const payloadProduct = action.payload.products[0];
-
-            const found = state.billInCurrentOrder.products.find(product => product?.id === payloadProduct.id);
-
-            if (found) {
-                // const updated = {
-                //     ...found,
-                //     amount: found.amount + payloadProduct.amount
-                // }
-                state.billInCurrentOrder.products= state.billInCurrentOrder.products.map(product => product.id === payloadProduct.id ? payloadProduct : product);            
-            }else {
-                state.billInCurrentOrder.products.push(payloadProduct);
+            if (payloadProduct != null) {
+                const found = state.billInCurrentOrder.products.find(product => product?.id === payloadProduct.id);
+                if (found) {
+                    state.billInCurrentOrder.products= state.billInCurrentOrder.products.map(product => product.id === payloadProduct.id ? payloadProduct : product);            
+                }else {
+                    state.billInCurrentOrder.products.push(payloadProduct);
+                }
             }
-
+            state.billInCurrentOrder.totalPrice = action.payload.totalPrice;
+        },
+        deleteProductInCurrentBill: (state: initialStateBillType, action: PayloadAction<billType>) => {
+            state.billInCurrentOrder.id = action.payload.id;
+            state.billInCurrentOrder.date = action.payload.date;
+            state.billInCurrentOrder.clientName = action.payload.clientName;
+            state.billInCurrentOrder.employeeName = action.payload.employeeName;
+            state.billInCurrentOrder.products = action.payload.products;
             state.billInCurrentOrder.totalPrice = action.payload.totalPrice;
         },
     },
@@ -108,3 +110,4 @@ export const selectBillsStatus = () => (state: RootState) => state.bill.status
 export const selectBillsFetchError = () => (state: RootState) => state.bill.error
 
 export const {editBill} = billSlice.actions;
+export const {deleteProductInCurrentBill} = billSlice.actions;

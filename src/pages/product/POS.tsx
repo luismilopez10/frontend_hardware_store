@@ -11,6 +11,7 @@ import { inventoryProductType, selectInventoryProductsFetchError, selectInventor
 import Loader from '../../components/Loader'
 import POSProductCard from '../../components/product/POSProductCard'
 import { AiOutlineShoppingCart } from 'react-icons/ai'
+import { editBill } from '../../features/BillSlice'
 
 type Props = {}
 

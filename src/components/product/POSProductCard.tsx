@@ -11,26 +11,26 @@ const POSProductCard = (props: cartProductType) => {
   
   const [thisProductAmount, setThisProductAmount] = useState(1)
 
-  const getProductsInCurrentBill = useSelector((state:RootState) => state.bill.billInCurrentOrder.products);
-
   const onAddToCart = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     e.preventDefault();
 
-    const newProductToAdd = {
-      "id": props.id,
-      "name": props.name,
-      "price": props.price,
-      "amount": thisProductAmount
+    if (props.stock > 0) {
+      const newProductToAdd = {
+        "id": props.id,
+        "name": props.name,
+        "price": props.price,
+        "amount": thisProductAmount
+      }
+  
+      dispatch(editBill({
+        id: "",
+        date: "",
+        clientName: "",
+        employeeName: "",
+        products: [newProductToAdd],
+        totalPrice: 0,
+      }));
     }
-
-    dispatch(editBill({
-      id: "",
-      date: "",
-      clientName: "",
-      employeeName: "",
-      products: [newProductToAdd],
-      totalPrice: 0,
-    }));
   }
 
   const onMinus = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
@@ -42,8 +42,10 @@ const POSProductCard = (props: cartProductType) => {
   }
 
   const onPlus = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
-    e.preventDefault();    
-    setThisProductAmount(thisProductAmount+1);      
+    e.preventDefault();    props.stock
+    if (thisProductAmount < props.stock) {
+      setThisProductAmount(thisProductAmount+1); 
+    }     
   }
 
   return (

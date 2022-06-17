@@ -1,37 +1,40 @@
 import { nanoid } from '@reduxjs/toolkit';
 import React, { useEffect, useState } from 'react'
-import { AiOutlineDelete, AiOutlineShoppingCart } from 'react-icons/ai';
+import { AiOutlineShoppingCart } from 'react-icons/ai';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { postBill } from '../../actions/bill/postBill';
+import { updateProduct } from '../../actions/product/updateProduct';
 import { RootState, useAppDispatch } from '../../app/store';
 import { billInCurrentOrderType, editBill } from '../../features/BillSlice';
+import { inventoryProductType } from '../../features/InventoryProductSlice';
 import BillProductCard from './BillProductCard';
 import './ShoppingCart.css'
 
 const ShoppingCart = () => {
 
   const { user } = useSelector((state: RootState) => state.logged);
-  const getProductsInCurrentBill = useSelector((state:RootState) => state.bill.billInCurrentOrder.products);
+  const getProductsInCurrentBill = useSelector((state: RootState) => state.bill.billInCurrentOrder.products);
 
   const dispatch = useAppDispatch();
   const navigate = useNavigate();
   const [clientName, setClientName] = useState("");
 
+  useEffect(() => {
+    if (user === null) {
+      navigate('/login');
+    }
+    updateTotalBillPrice();
+  }, [dispatch]);
+
   const getCurrentBill = useSelector((state: RootState) => state.bill.billInCurrentOrder);
-
-  const unicIdOfEachProduct = [...new Set(getCurrentBill.products.map(product => product.id))];
-
-  const finalProductListForBill = unicIdOfEachProduct
-    .map(productId => getCurrentBill.products
-      .filter(product => product.id === productId)
-    );
+  const getAllProductsInInventory = useSelector((state: RootState) => state.inventoryProduct.products);
 
   const totalCurrentPrice = getCurrentBill.products
-    .map(product => product.price*product.amount)
+    .map(product => product.price * product.amount)
     .reduce((a, b) => a + b, 0);
 
-  const updateTotalBillPrice = () => {
+  const updateTotalBillPrice = () => {    
     dispatch(editBill({
       id: "",
       date: "",
@@ -43,48 +46,82 @@ const ShoppingCart = () => {
   };
 
 
-  useEffect(() => {
-    if (user === null) {
-      navigate('/login');
-    }
-    updateTotalBillPrice();
-  }, [dispatch]);
-
+  const productsOfInventoryToSell: inventoryProductType[] = [];
 
   const onGenerateBill = (e: React.MouseEvent<HTMLInputElement, MouseEvent>) => {
     e.preventDefault();
 
-    dispatch(editBill({
-      id: nanoid(),
-      date: "",
-      clientName: clientName === "" ? "Generic Client" : clientName,
-      employeeName: user === null ? "Don Raúl" : user,
-      products: getProductsInCurrentBill,
-      totalPrice: totalCurrentPrice,
-    }));    
+    getAllProductsInInventory.forEach(productInventory => {
+      getCurrentBill.products.forEach(productBill => {
+        if (productInventory.id === productBill.id) {
+          productsOfInventoryToSell.push(productInventory);
+        }
+      })
+    })
 
-    // var fechaEnMiliseg = Date.now();
+    const productsAboveMinimum: string[] = [];
+    var sellConfirmed= false;
 
-    dispatch(postBill({
-      id: nanoid(),
-      date: "2022-06-17",
-      clientName: clientName === "" ? "Generic Client" : clientName,
-      employeeName: user === null ? "Don Raúl" : user,
-      products: getProductsInCurrentBill,
-      totalPrice: totalCurrentPrice,
-    }));
-    // setClientName("");
+    productsOfInventoryToSell.forEach(productInventory => {
+      getProductsInCurrentBill.forEach(ProductBill => {
 
-    // dispatch(editBill({
-    //   id: "",
-    //   date: "",
-    //   clientName: "",
-    //   employeeName: "",
-    //   products: [],
-    //   totalPrice: 0,
-    // }));
+        if ((productInventory.stock - ProductBill.amount) < productInventory.minimumAmount) {
+          productsAboveMinimum.push(ProductBill.name);
+        }
 
-    navigate('/pos');
+        if ((productInventory.stock - ProductBill.amount) < 0) {
+          alert("You don't have enough of " + productInventory.name + ". You have " + productInventory.stock + " units in stock.");
+        } else {
+          sellConfirmed = true;
+
+          const productWithStockModified = {
+            id: productInventory.id, name: productInventory.name, description: productInventory.description, stock: productInventory.stock - ProductBill.amount, price: productInventory.price, providerId: productInventory.providerId, minimumAmount: productInventory.minimumAmount, maximumAmount: productInventory.maximumAmount
+          }
+
+          dispatch(updateProduct(productWithStockModified));
+        }
+      })
+    });
+
+    if (productsAboveMinimum.length > 0) {
+      productsAboveMinimum.forEach(productName => {
+        alert("Minimum amount of product (" + productName + ") reached. Consider ordering more units from your provider.");
+      })
+    }
+
+    const copyOfProductsInCurrentBill = [...getProductsInCurrentBill];
+
+    if (sellConfirmed) {
+      const finalBill = {
+        id: nanoid(),
+        date: "",
+        clientName: clientName === "" ? "Generic Client" : clientName,
+        employeeName: user === null ? "Don Raúl" : user,
+        products: copyOfProductsInCurrentBill,
+        totalPrice: totalCurrentPrice,
+      }
+  
+      dispatch(editBill(finalBill));
+  
+      dispatch(postBill(finalBill));
+      
+      // dispatch(editBill({
+      //   id: "",
+      //   date: "",
+      //   clientName: "",
+      //   employeeName: "",
+      //   products: [],
+      //   totalPrice: 0,
+      // }));
+
+      alert("Bill generated.")
+
+      navigate('/pos');
+    } else {
+      alert("An error ocurred while creating the bill.")
+    }
+
+
   }
 
   return (
