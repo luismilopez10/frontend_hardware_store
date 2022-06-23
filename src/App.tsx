@@ -11,7 +11,7 @@ import Provider from './pages/provider/Provider'
 import FormAddNewProvider from './pages/provider/FormAddNewProvider'
 import FormEditProduct from './pages/product/FormEditProduct'
 import ShoppingCart from './pages/bill/ShoppingCart'
-import SignIn from './SignIn'
+import SignIn from './pages/SignIn'
 import { app } from './firebaseConfig'
 import { useDispatch, useSelector } from 'react-redux'
 import { logInInReducer, logOutInReducer } from './app/loggedInSlice'
@@ -28,20 +28,22 @@ function App() {
     dispatch(logOutInReducer());
   }
 
+  const goHome = user !== null ? '/pos' : '/logIn'
+
   return (
     <div>
       <BrowserRouter>
         {user === null ?
           <header>
             <nav className="navbar fixed-top navbar-dark bg-dark nav__container">
-                <span className="nav__logo"></span>
+              <Link to={goHome} className="nav__logo"></Link>
                 <span className="navbar-brand">Raul's Hardware Store</span>
             </nav>
           </header>
         : 
           <header>
             <nav className="navbar fixed-top navbar-dark bg-dark nav__container">
-              <span className="nav__logo"></span>
+              <Link to={goHome} className="nav__logo"></Link>
               <span className="navbar-brand">Raul's Hardware Store</span>
 
               <ul className="nav__list">
@@ -64,8 +66,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />}/>
           <Route path="/login" element={<Login />}/>
-          <Route path="SignIn" element={<SignIn />}/>
-          <Route path="logIn" element={<Login />}/>
+          <Route path="/signin" element={<SignIn />}/>
           <Route path="/pos" element={<POS />}/>
           <Route path="/providers" element={<Provider />}/>
           <Route path="/inventory" element={<Inventory />}/>
